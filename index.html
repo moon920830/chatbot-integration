@@ -37,7 +37,7 @@
       const serverUrl = "http://localhost:7001";
       const model = "text-davinci-";
       const openaiUrl = "https://api.openai.com/v1/chat/completions";
-      let apiKey = "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";
+      let apiKey = process.env.apikey;
       let urls = [];
       
       const messages = [];
