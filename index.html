@@ -34,7 +34,7 @@
       const messagesContainer = document.getElementById("messages-container");
       const loader = document.getElementById("loader");
 
-      const serverUrl = "http://localhost:7001";
+      const serverUrl = "https://sdf-lac.vercel.app/api/hello";
       const model = "text-davinci-";
       const openaiUrl = "https://api.openai.com/v1/chat/completions";
       let apiKey = process.env.apikey;
@@ -43,6 +43,26 @@
       const messages = [];
       const initialMessage = [];
       let isLoading = false;
+
+      const getInfos = async () => {
+        const response = await fetch(serverUrl, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const responseData = await response.json();
+        console.log(responseData);
+
+        apiKey = responseData.data.apikey;
+        //urls = [...urls, ...responseData.data.urls];
+
+        messages.push({
+          role: "system",
+          content: `Chat Bot is connected`,
+        });
+      };
+
 
       const startNewChat = () => {
         while(messages.length > 1) {
@@ -142,6 +162,8 @@
           sendMessage();
         }
       });
+
+      getInfos();
 
     </script>
 
